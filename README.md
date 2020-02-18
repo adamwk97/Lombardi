@@ -1,5 +1,7 @@
 Lombardi
 ================
+'Lombardi' is an R package that creates and visualizes data in the form of Lombardi graphs. This package is a work in progress.
+
 
 \`\`\`
 
