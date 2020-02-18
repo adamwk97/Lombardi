@@ -1,0 +1,64 @@
+---
+title: "Lombardi"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, echo=FALSE}
+packages <- c('igraph', 'readr','ggraph','MetamapsDB', 'plotrix')
+for(p in packages){
+  if(!require(p,character.only = TRUE)) install.packages(p, dependencies = TRUE)
+  suppressMessages(library(p,character.only = TRUE))
+}
+```
+
+```{r network, echo=TRUE}
+#import data
+
+net_nodes = read_csv("https://www.dropbox.com/s/ieaoo7efx87etyk/Dataset1-Media-Example-NODES.csv?dl=1")
+net_edges = read.csv("https://www.dropbox.com/s/s4mli5l6j30gc5n/Dataset1-Media-Example-EDGES.csv?dl=1")
+head(net_nodes)
+head(net_edges)
+#Create an adjacency matrix for net_edges
+net_edges_mat = as.matrix(net_edges)
+```
+
+```{r networkgraph, echo=TRUE}
+netgraph1 = graph_from_data_frame(d=net_edges, vertices=net_nodes, directed=FALSE) 
+
+netgraph1_wo_loops = simplify(netgraph1, remove.multiple = F, remove.loops = T) 
+
+```{r graph paramaters, echo=TRUE}
+df4 = net_edges$from
+df5 = net_edges$to
+
+lombardi1 = plot(netgraph1_wo_loops, main = "Time Series Plot (Media)", frame = TRUE, edge.arrow.size=.5, vertex.color = "salmon", vertex.label=net_nodes$media, vertex.label.color="black", vertex.size = 7, edge.curved = .5, edge.width=2, shape='sphere')
+lines(df4,df5, col = "red",)
+
+lombardi2 = tkplot(netgraph1_wo_loops, main = "Network Graph Ex", frame = TRUE, edge.arrow.size=.5, vertex.color = "salmon", vertex.label=net_nodes$media, vertex.label.color="black", vertex.size = 7, vertex.label.family = "Times", edge.curved = .5,)
+```
+
+```{r}
+net.bg <- sample_pa(80)
+
+V(net.bg)$size <- 8
+
+V(net.bg)$frame.color <- "white"
+
+V(net.bg)$color <- "orange"
+
+V(net.bg)$label <- ""
+
+n = 1
+C = c(.5,.6,.8,1)
+l = layout_on_sphere(net.bg)
+lc = norm_coords(l, ymin=-1, ymax=1, xmin=-1, xmax=1)
+
+lombardi3 = plot(net.bg, rescale = F, layout = lc*n, vertex.size = 8, vertex.color = "black", edge.width = 1.5, edge.arrow.mode = 0, edge.curved = .5)
+
+#draw.circle(0,0,n,border="red",lty=3,lwd=3)
+```
+
