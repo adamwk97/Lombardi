@@ -5,6 +5,7 @@ Version: 0.1.0
 Authors: Adam Kelly
 Email: awkelly@mail.usf.edu
 Description: Package for visualizing graphical networks of Lombardi graphs. WIP.
+Depends: R (>= 3.1.2), igraph, tm, twitteR
 License: G3
 LazyData: TRUE
 RoxygenNote: 5.0.1
